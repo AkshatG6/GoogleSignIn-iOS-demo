@@ -758,7 +758,7 @@ static NSString *const kConfigOpenIDRealmKey = @"GIDOpenIDRealm";
 #endif // TARGET_OS_MACCATALYST || TARGET_OS_OSX
 
   NSMutableDictionary<NSString *, NSString *> *additionalParameters =
-      [[NSMutableDictionary alloc] init];
+      [@{} mutableCopy];
   additionalParameters[kIncludeGrantedScopesParameter] = @"true";
   if (options.configuration.serverClientID) {
     additionalParameters[kAudienceParameter] = options.configuration.serverClientID;
