@@ -16,29 +16,24 @@
 
 #import <Foundation/Foundation.h>
 
+@class GIDTokenClaim;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * An object representing a single OIDC claim to be requested for an ID token.
+ * An internal utility class for processing and serializing GIDTokenClaim objects
+ * into the JSON format required for an OIDC request.
  */
-@interface GIDTokenClaim : NSObject
+@interface GIDTokenClaimsInternalOptions : NSObject
 
-/// The name of the claim, e.g., "auth_time" or "amr".
-@property (nonatomic, readonly) NSString *name;
-
-/// Whether the claim is requested as essential.
-@property (nonatomic, readonly, getter=isEssential) BOOL essential;
-
-// Making initializers unavailable to force use of factory methods.
-- (instancetype)init NS_UNAVAILABLE;
-
-#pragma mark - Factory Methods
-
-/// Creates a non-essential "auth_time" claim request.
-+ (instancetype)authTimeClaim;
-
-/// Creates an *essential* "auth_time" claim request.
-+ (instancetype)essentialAuthTimeClaim;
+/**
+ * Processes an array of claims, handling duplicates, and returns a JSON string
+ * formatted for the OIDC 'claims' parameter.
+ *
+ * @param claims The array of GIDTokenClaim objects provided by the developer.
+ * @return A JSON string representing the claims request, or nil if the input is empty.
+ */
++ (nullable NSString *)jsonStringForClaims:(nullable NSArray<GIDTokenClaim *> *)claims;
 
 @end
 
