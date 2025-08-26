@@ -44,7 +44,7 @@ final class GoogleSignInAuthenticator: ObservableObject {
       hint: nil,
       additionalScopes: nil,
       nonce: manualNonce,
-      tokenClaims: [authTimeClaimAsEssential]
+      tokenClaims: [authTimeClaim]
     ) { signInResult, error in
       guard let signInResult = signInResult else {
         print("Error! \(String(describing: error))")
