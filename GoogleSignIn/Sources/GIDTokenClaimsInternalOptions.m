@@ -75,7 +75,7 @@
         NSLog(@"Error creating JSON from claims: %@", error.localizedDescription);
         return nil;
     }
-
+    NSLog(@"jsonData %@", jsonData);
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 

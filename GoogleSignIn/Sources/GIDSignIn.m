@@ -153,7 +153,7 @@ static NSString *const kConfigHostedDomainKey = @"GIDHostedDomain";
 static NSString *const kConfigOpenIDRealmKey = @"GIDOpenIDRealm";
 
 // Parameters for token claims.
-static NSString *const kTokenClaimsKey = @"id_token";
+static NSString *const kTokenClaimsParameter = @"claims";
 
 // The callback queue used for authentication flow.
 @interface GIDAuthFlow : GIDCallbackQueue
@@ -878,8 +878,10 @@ static NSString *const kTokenClaimsKey = @"id_token";
     additionalParameters[kHostedDomainParameter] = options.configuration.hostedDomain;
   }
   if (options.tokenClaims) {
+    NSLog(@"tokenClaims %@", options.tokenClaims);
     NSString *tokenClaimsAsJsonString = [GIDTokenClaimsInternalOptions jsonStringForClaims:options.tokenClaims];
-    additionalParameters[kTokenClaimsKey] = tokenClaimsAsJsonString;
+    NSLog(@"JSON %@", tokenClaimsAsJsonString);
+    additionalParameters[kTokenClaimsParameter] = tokenClaimsAsJsonString;
   }
 
 #if TARGET_OS_IOS && !TARGET_OS_MACCATALYST

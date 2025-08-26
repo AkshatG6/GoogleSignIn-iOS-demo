@@ -36,18 +36,21 @@ final class GoogleSignInAuthenticator: ObservableObject {
       return
     }
     let manualNonce = UUID().uuidString
+    let authTimeClaim = GIDTokenClaim.authTime()
+    let authTimeClaimAsEssential = GIDTokenClaim.essentialAuthTime()
 
     GIDSignIn.sharedInstance.signIn(
       withPresenting: rootViewController,
       hint: nil,
       additionalScopes: nil,
-      nonce: manualNonce
+      nonce: manualNonce,
+      tokenClaims: [authTimeClaimAsEssential]
     ) { signInResult, error in
       guard let signInResult = signInResult else {
         print("Error! \(String(describing: error))")
         return
       }
-
+      print("ID Token is %@", signInResult.user.idToken?.tokenString as Any)
       // Per OpenID Connect Core section 3.1.3.7, rule #11, compare returned nonce to manual
       guard let idToken = signInResult.user.idToken?.tokenString,
             let returnedNonce = self.decodeNonce(fromJWT: idToken),
